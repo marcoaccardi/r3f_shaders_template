@@ -1,4 +1,4 @@
-#A BOILERPLATE TO START WORKING WITH REACT-THREE-FIBER and Shaders, by using .glsl file instead of typing string inside react component by using glsl from "babel-plugin-glsl"
+A BOILERPLATE TO START WORKING WITH REACT-THREE-FIBER and Shaders, by using .glsl file instead of typing string inside react component by using glsl from "babel-plugin-glsl"
 
 npm i
 npm start
