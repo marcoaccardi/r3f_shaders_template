@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { Canvas, extend } from "@react-three/fiber";
 import { shaderMaterial } from "@react-three/drei";
 import glsl from "babel-plugin-glsl/macro";
-import "./App.css";
+import "./App.scss";
 
 const WaveShaderMaterial = shaderMaterial(
   //Uniform
@@ -17,9 +17,10 @@ const WaveShaderMaterial = shaderMaterial(
 // shaders as JSX component
 extend({ WaveShaderMaterial });
 
-const Shape = () => {
-  <mesh>
-    {/*  geometry */}
+const Cube = () => {
+  const mesh = useRef();
+  <mesh ref={mesh}>
+    {/* GEOMETRY */}
     <waveShaderMaterial wireframe={false} />
   </mesh>;
 };
@@ -27,7 +28,7 @@ const Shape = () => {
 const Render = () => {
   return (
     <Canvas>
-      <Shape />
+      <Cube />
     </Canvas>
   );
 };
