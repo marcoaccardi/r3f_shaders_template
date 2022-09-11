@@ -1,34 +1,50 @@
-import * as THREE from "three";
-import { useRef, useState } from "react";
-import { Canvas, extend } from "@react-three/fiber";
-import { shaderMaterial } from "@react-three/drei";
-import glsl from "babel-plugin-glsl/macro";
 import "./App.scss";
+import * as THREE from "three";
+import { useRef, useState, useMemo } from "react";
+import { Canvas, extend, useFrame } from "@react-three/fiber";
+import { shaderMaterial, OrbitControls } from "@react-three/drei";
 
-const WaveShaderMaterial = shaderMaterial(
-  //Uniform
-  {},
-  //Vertex Shader
-  glsl`...`,
-  // Fragment Shader
-  glsl`...`
-);
+//VERTEX SHADER
+import vertex from "./shaders/vertexShader.glsl";
+//FRAGMENT SHADER
+import fragment from "./shaders/fragmentShader.glsl";
 
-// shaders as JSX component
-extend({ WaveShaderMaterial });
-
-const Cube = () => {
+const Flag = () => {
+  // This reference will give us direct access to the mesh
   const mesh = useRef();
-  <mesh ref={mesh}>
-    {/* GEOMETRY */}
-    <waveShaderMaterial wireframe={false} />
-  </mesh>;
+
+  //UNIFORMS
+  const uniforms = useMemo(() => ({}), []);
+  // R3F CLOCK ENGINE
+  useFrame((state) => {
+    const { clock } = state;
+    // mesh.current.material.uniforms.u_time.value = clock.getElapsedTime();
+  });
+
+  return (
+    <mesh
+      ref={mesh}
+      position={[0, 0, 0]}
+      rotation={[-Math.PI / 2, 0, 0]}
+      scale={1.5}
+    >
+      <planeGeometry args={[1, 1, 32, 32]} />
+      <shaderMaterial
+        // uniforms={uniforms}
+        // vertexShader={vertex}
+        // fragmentShader={fragment}
+        wireframe={false}
+      />
+    </mesh>
+  );
 };
 
 const Render = () => {
   return (
-    <Canvas>
-      <Cube />
+    <Canvas camera={{ position: [1.0, 1.0, 1.0] }}>
+      <axesHelper />
+      <Flag />
+      <OrbitControls />
     </Canvas>
   );
 };
